@@ -1,0 +1,6 @@
+id,name,age,gender,department,job_title,salary,experience,joining_year,performance_score,employment_status,location
+101,Rahul,24,Male,Engineering,Software Engineer,70000,3,2023,8.2,Active,Kanpur
+102,Priya,22,Female,HR,HR Executive,45000,2,2024,7.8,Active,Delhi
+103,Rohan,27,Male,Engineering,Senior Engineer,95000,5,2021,9.1,Active,Bangalore
+104,Amit,30,Male,Engineering,Tech Lead,-80000,7,2019,8.5,Active,Mumbai
+105,Neha,26,Female,Finance,Analyst,60000,4,2022,8.0,Active,Delhi
