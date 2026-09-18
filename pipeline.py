@@ -910,6 +910,7 @@ except Exception:
 # ----------------------------------
 
 logging.info("LOAD started")
+logging.info(f"Preparing to load {len(unique_records)} records into PostgreSQL")
 
 stage_start = time.perf_counter()
 
