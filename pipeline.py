@@ -27,7 +27,7 @@ logging.basicConfig(
     ]
 )
 
-logging.info("========== PIPELINE STARTED ==========")
+logging.info("========== EMPLOYEE ETL PIPELINE STARTED ==========")
 logging.info("")
 
 
