@@ -1,0 +1,26 @@
+services:
+  employee-etl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    env_file:
+      - .env
+
+    environment:
+      DB_HOST: host.docker.internal
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    volumes:
+      - ./output:/app/output
+      - ./logs:/app/logs
+
+    restart: "no"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import pipeline"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

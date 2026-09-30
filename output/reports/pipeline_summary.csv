@@ -1,0 +1,2 @@
+run_timestamp,pipeline_start_time,pipeline_end_time,pipeline_status,total_records,valid_records,valid_percentage,invalid_records,invalid_percentage,duplicate_records,duplicate_percentage,unique_records,new_records,changed_records,unchanged_records,unchanged_percentage,records_loaded,database_row_count,post_load_validation,execution_time_seconds,database_load_time_seconds,pipeline_performance_status
+2026-09-30 07:06:41.941181,2026-09-30 07:06:41.816765,2026-09-30 07:06:41.941126,SUCCESS,5000,5000,100.0,0,0.0,0,0.0,5000,0,0,5000,100.0,0,5000,PASS,0.1244,0,PASS

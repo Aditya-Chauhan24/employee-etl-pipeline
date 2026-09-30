@@ -1,0 +1,6 @@
+department,employee_count,active_count,inactive_count,total_salary,average_salary,maximum_salary,minimum_salary,average_age,maximum_age,minimum_age,average_experience,maximum_experience,minimum_experience,average_performance,maximum_performance,minimum_performance
+Engineering,1001,782,104,95246000,95150.85,150000,60000,37.56,55,21,10.2,30,0,7.58,10.0,5.0
+Finance,979,776,96,71816000,73356.49,110000,45000,37.59,55,21,9.77,30,0,7.48,10.0,5.0
+Marketing,1061,865,91,77207000,72768.14,110000,45000,38.34,55,21,10.46,30,0,7.48,10.0,5.0
+Sales,984,792,94,66866000,67953.25,105000,40000,37.76,55,21,10.72,30,0,7.52,10.0,5.0
+HR,975,755,110,63253000,64874.87,100000,40000,38.02,55,21,10.15,30,0,7.49,10.0,5.0
