@@ -348,7 +348,8 @@ def compare_with_database(unique_records, existing_records_by_id):
 # 11. DATABASE ENGINE
 # ============================================================
 
-engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+def get_engine():
+    return create_engine(DATABASE_URL, pool_pre_ping=True)
 
 
 # ============================================================
@@ -472,7 +473,7 @@ def execute_database_with_retry(operation, operation_name, max_retries=MAX_DB_RE
             logging.info(f"{operation_name} attempt {attempt}/{max_retries} started.")
 
             # NEW transaction and connection for every attempt.
-            with engine.begin() as connection:
+            with get_engine().begin() as connection:
                 operation(connection)
 
             transaction_elapsed = time.perf_counter() - transaction_start
@@ -1395,7 +1396,7 @@ def main():
         # Read existing database records
         # --------------------------------------------------------
 
-        with engine.connect() as connection:
+        with get_engine.connect() as connection:
             result = connection.execute(
                 text("""
                     SELECT
@@ -1481,7 +1482,7 @@ def main():
     stage_start = time.perf_counter()
 
 
-    with engine.connect() as connection:
+    with get_engine.connect() as connection:
         result = connection.execute(
             text(
                 """

@@ -23,13 +23,16 @@ def test_retryable_error_then_success():
         None
     ]
 
-    with patch("pipeline.engine.begin") as mock_begin:
+    mock_engine = Mock()
+    mock_begin = mock_engine.begin
 
-        mock_connection_context = Mock()
-        mock_connection_context.__enter__ = Mock(return_value=Mock())
-        mock_connection_context.__exit__ = Mock(return_value=None)
+    mock_connection_context = Mock()
+    mock_connection_context.__enter__ = Mock(return_value=Mock())
+    mock_connection_context.__exit__ = Mock(return_value=None)
 
-        mock_begin.return_value = mock_connection_context
+    mock_begin.return_value = mock_connection_context
+
+    with patch("pipeline.get_engine", return_value=mock_engine):
 
         with patch("pipeline.time.sleep"):
 
@@ -40,6 +43,7 @@ def test_retryable_error_then_success():
             )
 
     assert operation.call_count == 3
+    assert mock_begin.call_count == 3
 
 
 def test_non_retryable_error_stops_immediately():
@@ -52,13 +56,16 @@ def test_non_retryable_error_stops_immediately():
         Exception("duplicate key violation")
     )
 
-    with patch("pipeline.engine.begin") as mock_begin:
+    mock_engine = Mock()
+    mock_begin = mock_engine.begin
 
-        mock_connection_context = Mock()
-        mock_connection_context.__enter__ = Mock(return_value=Mock())
-        mock_connection_context.__exit__ = Mock(return_value=None)
+    mock_connection_context = Mock()
+    mock_connection_context.__enter__ = Mock(return_value=Mock())
+    mock_connection_context.__exit__ = Mock(return_value=None)
 
-        mock_begin.return_value = mock_connection_context
+    mock_begin.return_value = mock_connection_context
+
+    with patch("pipeline.get_engine", return_value=mock_engine):
 
         with patch("pipeline.time.sleep"):
 
@@ -72,3 +79,4 @@ def test_non_retryable_error_stops_immediately():
                 pass
 
     assert operation.call_count == 1
+    assert mock_begin.call_count == 1
