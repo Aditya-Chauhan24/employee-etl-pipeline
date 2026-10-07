@@ -1036,38 +1036,39 @@ def main():
 
     stage_start = time.perf_counter()
 
-    unique_records = []
 
-    duplicate_records = []
+    def deduplicate_records(records):
+        """Separate unique employee records from duplicate IDs."""
 
-    seen_ids = set()
+        unique_records = []
+        duplicate_records = []
+
+        seen_ids = set()
+
+        for record in records:
+            employee_id = record.get("id")
+
+            if employee_id in seen_ids:
+                duplicate_records.append(record)
+            else:
+                seen_ids.add(employee_id)
+                unique_records.append(record)
+
+        return unique_records, duplicate_records
 
 
-    for row in valid_records:
-        employee_id = row["id"]
-
-        if employee_id in seen_ids:
-            duplicate_records.append(row)
-
-        else:
-            seen_ids.add(employee_id)
-
-            unique_records.append(row)
-
+    unique_records, duplicate_records = deduplicate_records(valid_records)
 
     unique_records_count = len(unique_records)
 
     duplicate_count = len(duplicate_records)
 
-
     logging.info(f"Unique records    : {unique_records_count}")
-
     logging.info(f"Duplicate records : {duplicate_count}")
 
 
     if duplicate_records:
         logging.info("Duplicate records will be exported during EXPORT.")
-
     else:
         logging.info("No duplicate records detected.")
 
@@ -1077,7 +1078,6 @@ def main():
     monitor_stage("DEDUPLICATION", elapsed)
 
     log_stage_complete("DEDUPLICATION", elapsed)
-
 
     # ============================================================
     # STEP 6 - FILTERING
@@ -1396,7 +1396,7 @@ def main():
         # Read existing database records
         # --------------------------------------------------------
 
-        with get_engine.connect() as connection:
+        with get_engine().connect() as connection:
             result = connection.execute(
                 text("""
                     SELECT
@@ -1482,7 +1482,7 @@ def main():
     stage_start = time.perf_counter()
 
 
-    with get_engine.connect() as connection:
+    with get_engine().connect() as connection:
         result = connection.execute(
             text(
                 """

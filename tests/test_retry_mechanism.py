@@ -79,4 +79,4 @@ def test_non_retryable_error_stops_immediately():
                 pass
 
     assert operation.call_count == 1
-    assert mock_begin.call_count == 1
+    assert mock_begin.call_count == 1 
