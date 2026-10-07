@@ -60,3 +60,14 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t employee-etl:ci .
+
+      - name: Run ETL container
+        run: |
+          docker run --rm \
+            --network host \
+            -e DB_USER=postgres \
+            -e DB_PASSWORD=postgres \
+            -e DB_HOST=127.0.0.1 \
+            -e DB_PORT=5432 \
+            -e DB_NAME=employee_db \
+            employee-etl:ci
