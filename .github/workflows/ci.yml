@@ -49,6 +49,10 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
 
+      - name: Initialize database schema
+        run: |
+          python -c "from pipeline import get_engine, setup_database; engine = get_engine(); connection = engine.connect(); setup_database(connection); connection.commit(); connection.close(); engine.dispose()"
+
       - name: Run tests
         run: |
           pytest -v
