@@ -1,26 +1,33 @@
 services:
+
+  postgres:
+    image: postgres:16
+    container_name: employee-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: employee_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d employee_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   employee-etl:
     build:
       context: .
-      dockerfile: Dockerfile
-
-    env_file:
-      - .env
-
+    container_name: employee-etl
+    depends_on:
+      postgres:
+        condition: service_healthy
     environment:
-      DB_HOST: host.docker.internal
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: employee_db
 
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
-    volumes:
-      - ./output:/app/output
-      - ./logs:/app/logs
-
-    restart: "no"
-    healthcheck:
-      test: ["CMD", "python", "-c", "import pipeline"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
+volumes:
+  postgres_data:

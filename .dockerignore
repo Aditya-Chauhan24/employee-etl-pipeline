@@ -20,3 +20,6 @@ employees.csv
 pipeline_backup.py
 
 output/
+
+*.egg-info/
+.DS_Store
